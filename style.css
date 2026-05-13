@@ -1,0 +1,414 @@
+/* --- CSS Variables & Design System --- */
+:root {
+    --bg-main: #0B0E14;
+    --bg-card: #151A22;
+    --bg-card-hover: #1C222C;
+    --text-primary: #FFFFFF;
+    --text-secondary: #94A3B8;
+    --accent: #00FF87;
+    /* Neon Green */
+    --accent-hover: #00E075;
+    --danger: #FF3366;
+    /* For Live markers */
+    --font-main: 'Outfit', sans-serif;
+    --transition-speed: 0.3s;
+}
+
+/* --- Base Reset --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    font-family: var(--font-main);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul {
+    list-style: none;
+}
+
+/* --- Typography --- */
+h1,
+h2,
+h3,
+h4 {
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.highlight {
+    color: var(--accent);
+}
+
+/* --- Buttons --- */
+.btn-primary {
+    background-color: var(--accent);
+    color: #000;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 50px;
+    font-family: var(--font-main);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 0.9rem;
+}
+
+.btn-primary:hover {
+    background-color: var(--accent-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 255, 135, 0.4);
+}
+
+.btn-large {
+    padding: 1rem 2rem;
+    font-size: 1rem;
+}
+
+/* --- Navigation --- */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 5%;
+    background: rgba(11, 14, 20, 0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.logo h1 {
+    font-size: 1.8rem;
+    letter-spacing: -1px;
+}
+
+.logo span {
+    color: var(--accent);
+}
+
+.navbar nav ul {
+    display: flex;
+    gap: 2rem;
+}
+
+.navbar nav ul li a {
+    font-weight: 600;
+    color: var(--text-secondary);
+    transition: color var(--transition-speed);
+    font-size: 1rem;
+    position: relative;
+}
+
+.navbar nav ul li a:hover,
+.navbar nav ul li a.active {
+    color: var(--text-primary);
+}
+
+.navbar nav ul li a.active::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--accent);
+    border-radius: 2px;
+}
+
+/* --- Hero Section --- */
+.hero {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 0 5%;
+    position: relative;
+    background-image: linear-gradient(to right, rgba(11, 14, 20, 0.95) 20%, rgba(11, 14, 20, 0.2) 100%), url('./assets/stadium_hero.png');
+    background-size: cover;
+    background-position: center;
+}
+
+.hero-content {
+    max-width: 600px;
+    z-index: 2;
+    animation: fadeUp 1s ease-out;
+}
+
+.hero-content h2 {
+    font-size: 4.5rem;
+    margin-bottom: 1rem;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.hero-content p {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    margin-bottom: 2.5rem;
+}
+
+/* --- Section Layout --- */
+.section-container {
+    padding: 5rem 5%;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 3rem;
+}
+
+.section-header h3 {
+    font-size: 2.5rem;
+}
+
+.live-indicator {
+    color: var(--danger);
+    font-weight: 800;
+    letter-spacing: 1px;
+    animation: blink 2s infinite;
+}
+
+.view-all {
+    color: var(--text-secondary);
+    font-weight: 600;
+    transition: color var(--transition-speed);
+}
+
+.view-all:hover {
+    color: var(--accent);
+}
+
+/* --- Match Cards --- */
+.match-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.match-card {
+    background-color: var(--bg-card);
+    border-radius: 16px;
+    padding: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    transition: transform var(--transition-speed), background-color var(--transition-speed);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.match-card:hover {
+    transform: translateY(-5px);
+    background-color: var(--bg-card-hover);
+    border-color: rgba(0, 255, 135, 0.2);
+}
+
+.match-time {
+    color: var(--danger);
+    font-weight: 800;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+}
+
+.match-time.finished {
+    color: var(--text-secondary);
+}
+
+.teams {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.team {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.team-name {
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+.score {
+    font-weight: 800;
+    font-size: 1.4rem;
+    color: var(--text-primary);
+}
+
+.match-footer {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* --- News Cards --- */
+.news-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+}
+
+.news-card {
+    background-color: var(--bg-card);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: transform var(--transition-speed);
+    cursor: pointer;
+}
+
+.news-card:hover {
+    transform: translateY(-5px);
+}
+
+.news-img {
+    width: 100%;
+    height: 220px;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.5s ease;
+}
+
+.news-card:hover .news-img {
+    transform: scale(1.05);
+}
+
+.placeholder-1 {
+    background-image: linear-gradient(45deg, #1A2980, #26D0CE);
+}
+
+.placeholder-2 {
+    background-image: linear-gradient(45deg, #FF416C, #FF4B2B);
+}
+
+.news-content {
+    padding: 1.5rem;
+    position: relative;
+    background-color: var(--bg-card);
+    /* To cover image overlap on scale */
+}
+
+.tag {
+    background-color: rgba(0, 255, 135, 0.1);
+    color: var(--accent);
+    padding: 0.3rem 0.8rem;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    display: inline-block;
+    margin-bottom: 1rem;
+}
+
+.news-content h4 {
+    font-size: 1.4rem;
+    margin-bottom: 0.8rem;
+}
+
+.news-content p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+/* --- Footer --- */
+footer {
+    background-color: #07090D;
+    padding: 4rem 5% 2rem;
+    margin-top: 4rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+.footer-logo {
+    font-size: 1.5rem;
+    font-weight: 800;
+}
+
+.footer-logo span {
+    color: var(--accent);
+}
+
+.social-links {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.social-links a {
+    color: var(--text-secondary);
+    transition: color var(--transition-speed);
+}
+
+.social-links a:hover {
+    color: var(--accent);
+}
+
+/* --- Animations --- */
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.3;
+    }
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+    .hero-content h2 {
+        font-size: 3rem;
+    }
+
+    .navbar nav {
+        display: none;
+    }
+
+    /* Simple hiding for mobile, can add hamburger later */
+    .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+}
