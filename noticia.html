@@ -8,11 +8,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
     <style>
         .article-header {
             padding: 10rem 5% 5rem;
-            background-image: linear-gradient(to bottom, rgba(11, 14, 20, 0.5), var(--bg-main)), url('./assets/player_action.png');
+            background-image: linear-gradient(to bottom, rgba(11, 14, 20, 0.5), var(--bg-main)), url('../img/player_action.png');
             background-size: cover;
             background-position: center;
         }
@@ -63,7 +63,12 @@
                 <h1>NexGen<span>FC</span></h1>
             </a>
         </div>
-        <nav>
+        <div class="hamburger" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <nav id="nav-menu">
             <ul>
                 <li><a href="index.html#home">Inicio</a></li>
                 <li><a href="index.html#live">En Vivo</a></li>
@@ -110,6 +115,11 @@
             <p>&copy; 2026 NexGen Football. Todos los derechos reservados.</p>
         </div>
     </footer>
+    <script>
+        function toggleMenu() {
+            document.getElementById('nav-menu').classList.toggle('open');
+        }
+    </script>
 </body>
 
 </html>

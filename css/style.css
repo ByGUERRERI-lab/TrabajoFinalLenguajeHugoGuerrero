@@ -139,7 +139,7 @@ h4 {
     align-items: center;
     padding: 0 5%;
     position: relative;
-    background-image: linear-gradient(to right, rgba(11, 14, 20, 0.95) 20%, rgba(11, 14, 20, 0.2) 100%), url('./assets/stadium_hero.png');
+    background-image: linear-gradient(to right, rgba(11, 14, 20, 0.95) 20%, rgba(11, 14, 20, 0.2) 100%), url('../img/stadium_hero.png');
     background-size: cover;
     background-position: center;
 }
@@ -285,8 +285,8 @@ h4 {
 .news-img {
     width: 100%;
     height: 220px;
-    background-size: cover;
-    background-position: center;
+    object-fit: cover;
+    display: block;
     transition: transform 0.5s ease;
 }
 
@@ -597,17 +597,57 @@ footer {
     }
 }
 
+/* --- Menú Hamburguesa --- */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.hamburger span {
+    width: 25px;
+    height: 3px;
+    background-color: var(--text-primary);
+    transition: all 0.3s;
+}
+
 /* --- Diseño Adaptable (Responsive) --- */
 @media (max-width: 768px) {
     .hero-content h2 {
         font-size: 3rem;
     }
 
-    .navbar nav {
-        display: none;
+    .hamburger {
+        display: flex;
     }
 
-    /* Ocultación simple para móviles, se puede añadir menú hamburguesa luego */
+    .navbar nav {
+        display: flex;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: rgba(11, 14, 20, 0.95);
+        flex-direction: column;
+        align-items: center;
+        padding: 0;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s ease-out, padding 0.4s ease-out;
+    }
+
+    .navbar nav.open {
+        max-height: 300px;
+        padding: 2rem 0;
+    }
+
+    .navbar nav ul {
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+    }
+
     .section-header {
         flex-direction: column;
         align-items: flex-start;
