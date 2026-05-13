@@ -1,4 +1,4 @@
-/* --- CSS Variables & Design System --- */
+/* --- Variables CSS y Sistema de Diseño --- */
 :root {
     --bg-main: #0B0E14;
     --bg-card: #151A22;
@@ -6,15 +6,15 @@
     --text-primary: #FFFFFF;
     --text-secondary: #94A3B8;
     --accent: #00FF87;
-    /* Neon Green */
+    /* Verde Neón */
     --accent-hover: #00E075;
     --danger: #FF3366;
-    /* For Live markers */
+    /* Para los marcadores en vivo */
     --font-main: 'Outfit', sans-serif;
     --transition-speed: 0.3s;
 }
 
-/* --- Base Reset --- */
+/* --- Reseteo Base --- */
 * {
     margin: 0;
     padding: 0;
@@ -38,7 +38,7 @@ ul {
     list-style: none;
 }
 
-/* --- Typography --- */
+/* --- Tipografía --- */
 h1,
 h2,
 h3,
@@ -51,7 +51,7 @@ h4 {
     color: var(--accent);
 }
 
-/* --- Buttons --- */
+/* --- Botones --- */
 .btn-primary {
     background-color: var(--accent);
     color: #000;
@@ -78,7 +78,7 @@ h4 {
     font-size: 1rem;
 }
 
-/* --- Navigation --- */
+/* --- Navegación --- */
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -132,7 +132,7 @@ h4 {
     border-radius: 2px;
 }
 
-/* --- Hero Section --- */
+/* --- Principal --- */
 .hero {
     height: 100vh;
     display: flex;
@@ -162,7 +162,7 @@ h4 {
     margin-bottom: 2.5rem;
 }
 
-/* --- Section Layout --- */
+/* --- Diseño de Sección --- */
 .section-container {
     padding: 5rem 5%;
 }
@@ -195,7 +195,7 @@ h4 {
     color: var(--accent);
 }
 
-/* --- Match Cards --- */
+/* --- Tarjetas de Partidos --- */
 .match-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -263,7 +263,7 @@ h4 {
     letter-spacing: 0.5px;
 }
 
-/* --- News Cards --- */
+/* --- Tarjetas de Noticias --- */
 .news-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -306,7 +306,7 @@ h4 {
     padding: 1.5rem;
     position: relative;
     background-color: var(--bg-card);
-    /* To cover image overlap on scale */
+    /* Para cubrir la superposición de imágenes al escalar */
 }
 
 .tag {
@@ -331,7 +331,85 @@ h4 {
     font-size: 0.95rem;
 }
 
-/* --- Footer --- */
+/* --- Tabla de Clasificación --- */
+.league-selector {
+    background-color: var(--bg-card);
+    color: var(--text-primary);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-family: var(--font-main);
+    font-size: 1rem;
+    outline: none;
+    cursor: pointer;
+}
+
+.table-responsive {
+    overflow-x: auto;
+    background-color: var(--bg-card);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.standings-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+.standings-table th,
+.standings-table td {
+    padding: 1.2rem 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.standings-table th {
+    color: var(--text-secondary);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+}
+
+.standings-table tbody tr {
+    transition: background-color var(--transition-speed);
+}
+
+.standings-table tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+.standings-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.club-cell {
+    text-align: left;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.club-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.champions td:first-child {
+    border-left: 4px solid var(--accent);
+}
+
+.europa td:first-child {
+    border-left: 4px solid #FF9800;
+}
+
+.relegation td:first-child {
+    border-left: 4px solid var(--danger);
+}
+
+/* --- Pie de Página --- */
 footer {
     background-color: #07090D;
     padding: 4rem 5% 2rem;
@@ -370,7 +448,131 @@ footer {
     color: var(--accent);
 }
 
-/* --- Animations --- */
+/* --- Modals y Formularios --- */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+    align-items: center;
+    justify-content: center;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background-color: var(--bg-card);
+    padding: 2.5rem;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 450px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    position: relative;
+    animation: fadeUp 0.3s ease;
+}
+
+.close-btn {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-secondary);
+    transition: color var(--transition-speed);
+}
+
+.close-btn:hover {
+    color: var(--accent);
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background-color: #0B0E14;
+    color: var(--text-primary);
+    font-family: var(--font-main);
+    outline: none;
+}
+
+.form-group input:focus {
+    border-color: var(--accent);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--text-primary);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 0.75rem 1.5rem;
+    border-radius: 50px;
+    font-family: var(--font-main);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+}
+
+.btn-secondary:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+.auth-buttons {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* --- Barras de Estadisticas --- */
+.stat-row {
+    margin-bottom: 1.5rem;
+}
+
+.stat-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.stat-bar-container {
+    height: 8px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    display: flex;
+    overflow: hidden;
+}
+
+.stat-bar-left {
+    background-color: var(--text-primary);
+    height: 100%;
+}
+
+.stat-bar-right {
+    background-color: var(--accent);
+    height: 100%;
+}
+
+/* --- Animaciones --- */
 @keyframes fadeUp {
     from {
         opacity: 0;
@@ -395,7 +597,7 @@ footer {
     }
 }
 
-/* --- Responsive --- */
+/* --- Diseño Adaptable (Responsive) --- */
 @media (max-width: 768px) {
     .hero-content h2 {
         font-size: 3rem;
@@ -405,7 +607,7 @@ footer {
         display: none;
     }
 
-    /* Simple hiding for mobile, can add hamburger later */
+    /* Ocultación simple para móviles, se puede añadir menú hamburguesa luego */
     .section-header {
         flex-direction: column;
         align-items: flex-start;
