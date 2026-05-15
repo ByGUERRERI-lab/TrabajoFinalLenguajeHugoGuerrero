@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cesur365 - Casino</title>
+    <!-- Fuentes de Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .casino-hero {
+            padding: 12rem 5% 8rem;
+            background-image: linear-gradient(to bottom, rgba(11, 14, 20, 0.7), var(--bg-main)), url('img/casino_bg.png');
+            background-size: cover;
+            background-position: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .casino-hero h2 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .casino-hero p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            padding: 4rem 5%;
+        }
+
+        .game-card {
+            background-color: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 255, 135, 0.1);
+            border-color: rgba(0, 255, 135, 0.3);
+        }
+
+        .game-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+        }
+
+        .jackpot-banner {
+            background: linear-gradient(135deg, rgba(0, 255, 135, 0.1) 0%, rgba(0, 255, 135, 0.05) 100%);
+            border: 1px solid var(--accent);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            margin: 0 5% 4rem;
+            box-shadow: 0 0 20px rgba(0, 255, 135, 0.1);
+        }
+
+        .jackpot-amount {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--accent);
+            font-family: monospace;
+            letter-spacing: 2px;
+            margin: 1rem 0;
+            text-shadow: 0 0 10px rgba(0, 255, 135, 0.5);
+        }
+
+        .promo-tag {
+            position: absolute;
+            top: 15px;
+            right: -30px;
+            background: var(--danger);
+            color: white;
+            padding: 5px 30px;
+            transform: rotate(45deg);
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        /* Slot Machine Styles */
+        .slot-machine {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 2px solid var(--accent);
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8), 0 0 15px rgba(0, 255, 135, 0.2);
+        }
+
+        .slot-reel {
+            font-size: 4rem;
+            background: #fff;
+            color: #000;
+            width: 80px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            box-shadow: inset 0 5px 10px rgba(0, 0, 0, 0.5);
+            transition: all 0.1s;
+        }
+
+        .spinning {
+            animation: slotSpin 0.1s linear infinite;
+        }
+
+        @keyframes slotSpin {
+            0% {
+                transform: translateY(-5px);
+                filter: blur(2px);
+            }
+
+            50% {
+                transform: translateY(5px);
+                filter: blur(2px);
+            }
+
+            100% {
+                transform: translateY(-5px);
+                filter: blur(2px);
+            }
+        }
+
+        /* Icon Animations */
+        @keyframes floatIcon {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes rotateIcon {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes pulseIcon {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        @keyframes wobbleIcon {
+
+            0%,
+            100% {
+                transform: rotate(0deg);
+            }
+
+            25% {
+                transform: rotate(-15deg);
+            }
+
+            75% {
+                transform: rotate(15deg);
+            }
+        }
+
+        .game-card:nth-child(1) .game-icon {
+            animation: wobbleIcon 3s ease-in-out infinite;
+            display: inline-block;
+        }
+
+        .game-card:nth-child(2) .game-icon {
+            animation: rotateIcon 12s linear infinite;
+            display: inline-block;
+        }
+
+        .game-card:nth-child(3) .game-icon {
+            animation: floatIcon 4s ease-in-out infinite;
+            display: inline-block;
+        }
+
+        .game-card:nth-child(4) .game-icon {
+            animation: pulseIcon 2s ease-in-out infinite;
+            display: inline-block;
+        }
+
+        /* Game Effect Animations */
+        @keyframes shake {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            10%,
+            30%,
+            50%,
+            70%,
+            90% {
+                transform: translateX(-10px);
+            }
+
+            20%,
+            40%,
+            60%,
+            80% {
+                transform: translateX(10px);
+            }
+        }
+
+        .crashed-anim {
+            animation: shake 0.4s cubic-bezier(.36, .07, .19, .97) both;
+        }
+
+        @keyframes winPulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(0, 255, 135, 0.7);
+            }
+
+            70% {
+                box-shadow: 0 0 0 30px rgba(0, 255, 135, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(0, 255, 135, 0);
+            }
+        }
+
+        .win-anim {
+            animation: winPulse 1.5s infinite;
+            border-color: rgba(0, 255, 135, 1) !important;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="navbar">
+        <div class="logo">
+            <a href="index.html" style="text-decoration: none; color: inherit;">
+                <h1>Cesur<span>365</span></h1>
+            </a>
+        </div>
+        <div class="hamburger" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <nav id="nav-menu">
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="envivo.html">En Vivo</a></li>
+                <li><a href="noticias.html">Noticias</a></li>
+                <li><a href="clasificacion.html">Clasificación</a></li>
+                <li><a href="favoritos.html">Favoritos</a></li>
+                <li><a href="casino.html" class="active">Casino</a></li>
+            </ul>
+        </nav>
+        <div class="auth-buttons" id="auth-section">
+            <button class="btn-secondary" onclick="openModal('loginModal')">Entrar</button>
+            <button class="btn-primary" onclick="openModal('registerModal')">Registrarse</button>
+        </div>
+    </header>
+
+    <main>
+        <section class="casino-hero">
+            <h2>Casino <span class="highlight">Premium</span></h2>
+            <p>Siente la emoción del juego con los mejores slots, ruletas en vivo y apuestas virtuales. Todo con tu
+                cuenta de Cesur365.</p>
+            <button class="btn-primary" style="font-size: 1.1rem; padding: 1rem 3rem;">Jugar Ahora</button>
+        </section>
+
+        <div class="jackpot-banner">
+            <h3>BOTE ACUMULADO <span style="color: var(--text-secondary);">GLOBAL</span></h3>
+            <div class="jackpot-amount" id="jackpot">€ 1,458,920.55</div>
+            <p style="color: var(--text-secondary);">El premio no para de subir. ¿Serás tú el próximo ganador?</p>
+        </div>
+
+        <section class="section-container" style="padding-top: 0;">
+            <div class="section-header">
+                <h3>Juegos <span class="highlight">Destacados</span></h3>
+            </div>
+
+            <div class="game-grid">
+                <!-- Juego 1 -->
+                <div class="game-card">
+                    <div class="promo-tag">NUEVO</div>
+                    <div class="game-icon">🎰</div>
+                    <h4 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Cesur Slots Pro</h4>
+                    <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">Tira de la palanca y alinea los
+                        escudos para ganar multiplicadores x100.</p>
+                    <button class="btn-secondary" style="width: 100%;" onclick="openModal('gameModal')">Probar
+                        Demo</button>
+                </div>
+
+                <!-- Juego 2 -->
+                <div class="game-card">
+                    <div class="game-icon">🎡</div>
+                    <h4 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Ruleta en Vivo</h4>
+                    <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">Crupieres reales 24/7. Apuesta al
+                        rojo, al negro o a tu número de la suerte.</p>
+                    <button class="btn-primary" style="width: 100%;" onclick="openModal('rouletteModal')">Entrar a la
+                        Mesa</button>
+                </div>
+
+                <!-- Juego 3 -->
+                <div class="game-card">
+                    <div class="promo-tag" style="background: var(--accent); color: var(--bg-main);">TOP</div>
+                    <div class="game-icon">🃏</div>
+                    <h4 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Blackjack VIP</h4>
+                    <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">Consigue 21 y vence al repartidor en
+                        nuestra exclusiva mesa para grandes apostadores.</p>
+                    <button class="btn-secondary" style="width: 100%;"
+                        onclick="openModal('blackjackModal')">Sentarse</button>
+                </div>
+
+                <!-- Juego 4 -->
+                <div class="game-card">
+                    <div class="game-icon">🍔</div>
+                    <h4 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Jorge Glotón</h4>
+                    <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">Multiplica tu dinero mientras el
+                        gordo come. ¡Retírate antes de que explote!</p>
+                    <button class="btn-secondary" style="width: 100%;" onclick="openModal('crashModal')">Jugar
+                        Glotón</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">Cesur<span>365</span></div>
+            <p>&copy; 2026 Cesur365. Todos los derechos reservados. <br><span
+                    style="font-size: 0.8rem; color: var(--text-secondary);">Juega con responsabilidad. Mayores de 18
+                    años.</span></p>
+            <div class="social-links">
+                <a href="#">Twitter</a>
+                <a href="#">Instagram</a>
+                <a href="#">YouTube</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            document.getElementById('nav-menu').classList.toggle('open');
+        }
+
+        // Jackpot Animation
+        let jackpotVal = 1458920.55;
+        setInterval(() => {
+            jackpotVal += Math.random() * 5;
+            document.getElementById('jackpot').innerText = "€ " + jackpotVal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }, 3000);
+
+        // ---autenticación---
+        function openModal(id) {
+            document.getElementById(id).classList.add('active');
+            if (id === 'rouletteModal' && document.getElementById('rouletteStrip') && document.getElementById('rouletteStrip').innerHTML.trim() === '') {
+                if (typeof generateRouletteStrip === 'function') generateRouletteStrip('red', 7);
+            }
+        }
+        function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+
+        function checkAuth() {
+            const user = localStorage.getItem('nexgenUser');
+            const authSection = document.getElementById('auth-section');
+            if (user) {
+                authSection.innerHTML = `<span style="margin-right:1rem; font-weight:600;">Hola, <span class="highlight">${user}</span></span>
+                                         <button class="btn-secondary" onclick="logout()">Salir</button>`;
+            } else {
+                authSection.innerHTML = `<button class="btn-secondary" onclick="openModal('loginModal')">Entrar</button>
+                                         <button class="btn-primary" onclick="openModal('registerModal')">Registrarse</button>`;
+            }
+        }
+
+        function handleRegister(e) {
+            e.preventDefault();
+            const user = document.getElementById('regUser').value;
+            localStorage.setItem('nexgenUser', user);
+            closeModal('registerModal');
+            checkAuth();
+            alert('¡Registro exitoso! Bienvenido ' + user);
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            const user = document.getElementById('loginUser').value;
+            localStorage.setItem('nexgenUser', user);
+            closeModal('loginModal');
+            checkAuth();
+        }
+
+        function logout() {
+            localStorage.removeItem('nexgenUser');
+            checkAuth();
+        }
+
+        window.onload = checkAuth;
+
+        // Slot Machine Logic
+        const symbols = ['⚽', '🏆', '💎', '🍒', '🔔', '👑'];
+        let isSpinning = false;
+        let spinIntervals = [];
+
+        function spinSlots() {
+            if (isSpinning) return;
+            isSpinning = true;
+
+            const btn = document.getElementById('spinButton');
+            const msg = document.getElementById('slotMessage');
+            const reels = [document.getElementById('reel1'), document.getElementById('reel2'), document.getElementById('reel3')];
+
+            btn.disabled = true;
+            btn.style.opacity = '0.5';
+            msg.style.color = 'var(--text-main)';
+            msg.innerText = 'Girando...';
+
+            reels.forEach((reel, i) => {
+                reel.classList.add('spinning');
+                spinIntervals[i] = setInterval(() => {
+                    reel.innerText = symbols[Math.floor(Math.random() * symbols.length)];
+                }, 50 + (i * 20)); // Differing speeds
+            });
+
+            setTimeout(() => {
+                reels.forEach((reel, i) => {
+                    clearInterval(spinIntervals[i]);
+                    reel.classList.remove('spinning');
+                });
+
+                const result = [
+                    symbols[Math.floor(Math.random() * symbols.length)],
+                    symbols[Math.floor(Math.random() * symbols.length)],
+                    symbols[Math.floor(Math.random() * symbols.length)]
+                ];
+
+                reels[0].innerText = result[0];
+                reels[1].innerText = result[1];
+                reels[2].innerText = result[2];
+
+                if (result[0] === result[1] && result[1] === result[2]) {
+                    msg.style.color = 'var(--accent)';
+                    msg.innerText = '¡JACKPOT! Has ganado 1000 Monedas 🎉';
+                    jackpotVal -= 1000;
+                    document.querySelector('.slot-machine').classList.add('win-anim');
+                    setTimeout(() => document.querySelector('.slot-machine').classList.remove('win-anim'), 3000);
+                } else if (result[0] === result[1] || result[1] === result[2] || result[0] === result[2]) {
+                    msg.style.color = '#FFD700';
+                    msg.innerText = '¡Premio Menor! Has ganado 50 Monedas';
+                } else {
+                    msg.style.color = 'var(--danger)';
+                    msg.innerText = 'Casi... ¡Inténtalo de nuevo!';
+                }
+
+                isSpinning = false;
+                btn.disabled = false;
+                btn.style.opacity = '1';
+            }, 2000);
+        }
+
+        // Crash Game Logic (Gordo Gloton)
+        let crashInterval;
+        let multiplier = 1.00;
+        let crashPoint = 0;
+        let isCrashing = false;
+        let guyScale = 1;
+
+        function animateBurger() {
+            const burger = document.getElementById('burger');
+            burger.style.transition = 'none';
+            burger.style.right = '-50px';
+            setTimeout(() => {
+                burger.style.transition = 'right 0.3s linear';
+                burger.style.right = 'calc(50% - 10px)';
+            }, 20);
+        }
+
+        function startCrash() {
+            const startBtn = document.getElementById('startCrashBtn');
+            const cashoutBtn = document.getElementById('cashoutBtn');
+            const multDisplay = document.getElementById('crashMultiplier');
+            const msg = document.getElementById('crashMessage');
+            const fatGuy = document.getElementById('fatGuy');
+
+            startBtn.disabled = true;
+            cashoutBtn.disabled = false;
+            msg.innerText = '';
+            multDisplay.style.color = 'var(--accent)';
+            multiplier = 1.00;
+            fatGuy.innerHTML = '<img src="img/jorge.jpg" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; border: 3px solid var(--accent);">';
+            guyScale = 1;
+            fatGuy.style.transform = `scale(${guyScale})`;
+
+            crashPoint = (Math.random() * 3 + 1).toFixed(2);
+            if (Math.random() > 0.8) crashPoint = (Math.random() * 8 + 1).toFixed(2);
+
+            let tick = 0;
+            crashInterval = setInterval(() => {
+                multiplier += 0.05;
+                multDisplay.innerText = multiplier.toFixed(2) + 'x';
+
+                guyScale += 0.02;
+                fatGuy.style.transform = `scale(${guyScale})`;
+
+                tick++;
+                if (tick % 5 === 0) animateBurger(); // Come una hamburguesa cada medio segundo
+
+                if (multiplier >= crashPoint) {
+                    clearInterval(crashInterval);
+                    isCrashing = false;
+                    cashoutBtn.disabled = true;
+                    startBtn.disabled = false;
+                    multDisplay.style.color = 'var(--danger)';
+                    msg.style.color = 'var(--danger)';
+                    msg.innerText = '¡PUM! El gordo ha explotado. Has perdido.';
+
+                    fatGuy.innerHTML = '💥';
+                    fatGuy.style.fontSize = '4rem';
+                    fatGuy.style.transform = `scale(${guyScale * 1.5})`;
+
+                    document.getElementById('crashModal').querySelector('.modal-content').classList.add('crashed-anim');
+                    setTimeout(() => document.getElementById('crashModal').querySelector('.modal-content').classList.remove('crashed-anim'), 500);
+                }
+            }, 100);
+        }
+
+        function cashout() {
+            if (!isCrashing) return;
+            clearInterval(crashInterval);
+            isCrashing = false;
+
+            const startBtn = document.getElementById('startCrashBtn');
+            const cashoutBtn = document.getElementById('cashoutBtn');
+            const msg = document.getElementById('crashMessage');
+            const fatGuy = document.getElementById('fatGuy');
+
+            cashoutBtn.disabled = true;
+            startBtn.disabled = false;
+
+            fatGuy.innerHTML = '😎'; // Satisfecho
+            fatGuy.style.fontSize = '4rem';
+
+            const winAmount = (10 * multiplier).toFixed(2);
+            msg.style.color = 'var(--accent)';
+            msg.innerText = `¡Te retiraste a tiempo! Ganaste ${winAmount} Monedas 🎉`;
+
+            document.getElementById('crashMultiplier').parentElement.classList.add('win-anim');
+            setTimeout(() => document.getElementById('crashMultiplier').parentElement.classList.remove('win-anim'), 3000);
+        }
+
+        function resetCrash() {
+            clearInterval(crashInterval);
+            document.getElementById('crashMultiplier').innerText = '1.00x';
+            document.getElementById('crashMultiplier').style.color = 'var(--accent)';
+            document.getElementById('startCrashBtn').disabled = false;
+            document.getElementById('cashoutBtn').disabled = true;
+            document.getElementById('crashMessage').innerText = '';
+            document.getElementById('fatGuy').innerHTML = '<img src="img/jorge.jpg" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; border: 3px solid var(--accent);">';
+            document.getElementById('fatGuy').style.transform = 'scale(1)';
+            document.getElementById('burger').style.right = '-50px';
+            isCrashing = false;
+        }
+
+        // Premium Roulette Logic
+        let isRouletteSpinning = false;
+        const TILE_WIDTH = 80;
+        const TILE_MARGIN = 4;
+        const ACTUAL_TILE_WIDTH = TILE_WIDTH + TILE_MARGIN * 2;
+
+        function generateRouletteStrip(winningColor, winningNumber) {
+            const strip = document.getElementById('rouletteStrip');
+            strip.innerHTML = '';
+            strip.style.transition = 'none';
+            strip.style.transform = `translateX(0px)`;
+
+            let html = '';
+            for (let i = 0; i < 100; i++) {
+                let colorClass, bg, num;
+
+                if (i === 85) {
+                    bg = winningColor === 'red' ? '#E63946' : winningColor === 'black' ? '#1D3557' : '#2A9D8F';
+                    num = winningNumber;
+                } else {
+                    let r = Math.random();
+                    if (r < 0.05) { bg = '#2A9D8F'; num = 0; }
+                    else if (r < 0.5) { bg = '#E63946'; num = Math.floor(Math.random() * 18) * 2 + 1; }
+                    else { bg = '#1D3557'; num = Math.floor(Math.random() * 18) * 2 + 2; }
+                }
+
+                html += `<div style="min-width: ${TILE_WIDTH}px; height: ${TILE_WIDTH}px; margin: 0 ${TILE_MARGIN}px; background: ${bg}; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: bold; color: white; box-shadow: inset 0 0 10px rgba(0,0,0,0.5);">${num}</div>`;
+            }
+            strip.innerHTML = html;
+        }
+
+        function betRoulette(color) {
+            if (isRouletteSpinning) return;
+            isRouletteSpinning = true;
+
+            const strip = document.getElementById('rouletteStrip');
+            const msg = document.getElementById('rouletteMessage');
+
+            msg.style.color = 'var(--text-main)';
+            msg.innerText = `Apuesta al ${color === 'red' ? 'ROJO' : color === 'black' ? 'NEGRO' : 'VERDE'}... ¡Girando!`;
+
+            const finalNum = Math.floor(Math.random() * 37);
+            let finalColor = 'green';
+            if (finalNum !== 0) {
+                finalColor = finalNum % 2 !== 0 ? 'red' : 'black'; // Red is odd usually, let's keep it simple
+            }
+
+            generateRouletteStrip(finalColor, finalNum);
+
+            void strip.offsetWidth; // force reflow
+
+            const containerWidth = strip.parentElement.offsetWidth;
+            const pointerOffset = containerWidth / 2;
+            const randomOffset = (Math.random() * (TILE_WIDTH - 20)) - ((TILE_WIDTH - 20) / 2);
+            const targetX = (85 * ACTUAL_TILE_WIDTH + (ACTUAL_TILE_WIDTH / 2)) - pointerOffset + randomOffset;
+
+            strip.style.transition = 'transform 6s cubic-bezier(0.15, 0.9, 0.1, 1)';
+            strip.style.transform = `translateX(-${targetX}px)`;
+
+            setTimeout(() => {
+                if (finalColor === color) {
+                    msg.style.color = 'var(--accent)';
+                    msg.innerText = `¡Ha salido ${finalNum} ${finalColor === 'red' ? 'Rojo' : finalColor === 'black' ? 'Negro' : 'Verde'}! ¡HAS GANADO! 🎉`;
+                    strip.parentElement.classList.add('win-anim');
+                    setTimeout(() => strip.parentElement.classList.remove('win-anim'), 3000);
+                } else {
+                    msg.style.color = 'var(--danger)';
+                    msg.innerText = `Ha salido ${finalNum} ${finalColor === 'red' ? 'Rojo' : finalColor === 'black' ? 'Negro' : 'Verde'}. Has perdido.`;
+                    document.getElementById('rouletteModal').querySelector('.modal-content').classList.add('crashed-anim');
+                    setTimeout(() => document.getElementById('rouletteModal').querySelector('.modal-content').classList.remove('crashed-anim'), 500);
+                }
+                isRouletteSpinning = false;
+            }, 6200);
+        }
+
+        // Blackjack Logic
+        let deck = [];
+        let playerHand = [];
+        let dealerHand = [];
+        const cardSuits = ['♠', '♥', '♦', '♣'];
+        const cardValues = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
+
+        function buildDeck() {
+            deck = [];
+            for (let s of cardSuits) {
+                for (let v of cardValues) {
+                    deck.push({ suit: s, value: v });
+                }
+            }
+            deck.sort(() => Math.random() - 0.5);
+        }
+
+        function getCardValue(card) {
+            if (['J', 'Q', 'K'].includes(card.value)) return 10;
+            if (card.value === 'A') return 11;
+            return parseInt(card.value);
+        }
+
+        function calculateScore(hand) {
+            let score = 0;
+            let aces = 0;
+            for (let card of hand) {
+                score += getCardValue(card);
+                if (card.value === 'A') aces += 1;
+            }
+            while (score > 21 && aces > 0) {
+                score -= 10;
+                aces -= 1;
+            }
+            return score;
+        }
+
+        function renderCard(card) {
+            let color = (card.suit === '♥' || card.suit === '♦') ? '#E63946' : '#1D3557';
+            return `<span style="color: ${color}; background: white; padding: 5px 10px; border-radius: 5px; margin: 2px; border: 1px solid #ccc; display: inline-block; box-shadow: 2px 2px 5px rgba(0,0,0,0.2); font-weight: bold;">${card.value}${card.suit}</span>`;
+        }
+
+        function startBlackjack() {
+            buildDeck();
+            playerHand = [deck.pop(), deck.pop()];
+            dealerHand = [deck.pop()];
+
+            document.getElementById('bjStartBtn').style.display = 'none';
+            document.getElementById('bjHitBtn').style.display = 'block';
+            document.getElementById('bjStandBtn').style.display = 'block';
+            document.getElementById('blackjackMessage').innerText = '';
+
+            updateBlackjackUI();
+
+            if (calculateScore(playerHand) === 21) {
+                endBlackjack('¡Blackjack! Has ganado 25 Monedas 🎉', true);
+            }
+        }
+
+        function hitBlackjack() {
+            playerHand.push(deck.pop());
+            updateBlackjackUI();
+            if (calculateScore(playerHand) > 21) {
+                endBlackjack('Te has pasado de 21. Gana el Crupier.', false);
+            }
+        }
+
+        function standBlackjack() {
+            let dealerScore = calculateScore(dealerHand);
+            while (dealerScore < 17) {
+                dealerHand.push(deck.pop());
+                dealerScore = calculateScore(dealerHand);
+            }
+            updateBlackjackUI();
+
+            let pScore = calculateScore(playerHand);
+            if (dealerScore > 21) {
+                endBlackjack('El Crupier se pasa de 21. ¡Has ganado! 🎉', true);
+            } else if (dealerScore > pScore) {
+                endBlackjack('Gana el Crupier.', false);
+            } else if (dealerScore < pScore) {
+                endBlackjack('¡Has ganado a la casa! 🎉', true);
+            } else {
+                endBlackjack('Empate. Se devuelve la apuesta.', null);
+            }
+        }
+
+        function updateBlackjackUI() {
+            document.getElementById('playerCards').innerHTML = playerHand.map(renderCard).join('');
+            document.getElementById('dealerCards').innerHTML = dealerHand.map(renderCard).join('');
+            document.getElementById('playerScore').innerText = calculateScore(playerHand);
+            document.getElementById('dealerScore').innerText = calculateScore(dealerHand);
+        }
+
+        function endBlackjack(msgText, playerWins) {
+            document.getElementById('bjStartBtn').style.display = 'block';
+            document.getElementById('bjStartBtn').innerText = 'Jugar de Nuevo';
+            document.getElementById('bjHitBtn').style.display = 'none';
+            document.getElementById('bjStandBtn').style.display = 'none';
+
+            const msg = document.getElementById('blackjackMessage');
+            msg.innerText = msgText;
+            if (playerWins === true) {
+                msg.style.color = 'var(--accent)';
+                document.getElementById('blackjackModal').querySelector('.modal-content').classList.add('win-anim');
+                setTimeout(() => document.getElementById('blackjackModal').querySelector('.modal-content').classList.remove('win-anim'), 3000);
+            } else if (playerWins === false) {
+                msg.style.color = 'var(--danger)';
+                document.getElementById('blackjackModal').querySelector('.modal-content').classList.add('crashed-anim');
+                setTimeout(() => document.getElementById('blackjackModal').querySelector('.modal-content').classList.remove('crashed-anim'), 500);
+            } else {
+                msg.style.color = '#FFD700';
+            }
+        }
+    </script>
+
+    <!-- Modales de Auth -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('loginModal')">&times;</span>
+            <h3 style="margin-bottom: 1.5rem; font-size: 1.8rem;">Iniciar <span class="highlight">Sesión</span></h3>
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label>Usuario</label>
+                    <input type="text" id="loginUser" required>
+                </div>
+                <div class="form-group">
+                    <label>Contraseña</label>
+                    <input type="password" id="loginPass" required>
+                </div>
+                <button type="submit" class="btn-primary" style="width: 100%;">Entrar</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('registerModal')">&times;</span>
+            <h3 style="margin-bottom: 1.5rem; font-size: 1.8rem;">Crea tu <span class="highlight">Cuenta</span></h3>
+            <form id="registerForm" onsubmit="handleRegister(event)">
+                <div class="form-group">
+                    <label>Nombre de Usuario</label>
+                    <input type="text" id="regUser" required>
+                </div>
+                <div class="form-group">
+                    <label>Correo Electrónico</label>
+                    <input type="email" id="regEmail" required>
+                </div>
+                <div class="form-group">
+                    <label>Contraseña</label>
+                    <input type="password" id="regPass" required>
+                </div>
+                <button type="submit" class="btn-primary" style="width: 100%;">Registrarse</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Game Modal (Slots) -->
+    <div id="gameModal" class="modal">
+        <div class="modal-content" style="max-width: 500px; text-align: center;">
+            <span class="close-btn" onclick="closeModal('gameModal')">&times;</span>
+            <h3 style="margin-bottom: 1.5rem; font-size: 1.8rem;">Cesur <span class="highlight">Slots Pro</span></h3>
+
+            <div class="slot-machine">
+                <div class="slot-reel" id="reel1">🍒</div>
+                <div class="slot-reel" id="reel2">🍒</div>
+                <div class="slot-reel" id="reel3">🍒</div>
+            </div>
+
+            <div id="slotMessage"
+                style="font-size: 1.2rem; font-weight: bold; margin: 1.5rem 0; height: 30px; color: var(--accent);">
+                ¡Tira de la palanca!</div>
+
+            <button class="btn-primary" id="spinButton" onclick="spinSlots()"
+                style="width: 100%; font-size: 1.2rem; padding: 1rem;">🎰 Tirar (10 Monedas)</button>
+        </div>
+    </div>
+
+    <!-- Crash Game Modal (El Gordo Gloton) -->
+    <div id="crashModal" class="modal">
+        <div class="modal-content" style="max-width: 500px; text-align: center;">
+            <span class="close-btn" onclick="closeModal('crashModal'); resetCrash();">&times;</span>
+            <h3 style="margin-bottom: 1.5rem; font-size: 1.8rem;">Gordo <span class="highlight">Glotón</span></h3>
+
+            <div
+                style="background: var(--bg-main); padding: 3rem; border-radius: 12px; border: 2px solid rgba(255,255,255,0.1); margin-bottom: 1.5rem; position: relative; overflow: hidden; min-height: 250px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                <div id="fatGuy"
+                    style="transition: transform 0.1s; z-index: 2; display: flex; align-items: center; justify-content: center;">
+                    <img src="img/jorge.jpg"
+                        style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; border: 3px solid var(--accent);">
+                </div>
+                <div id="burger"
+                    style="font-size: 2rem; position: absolute; right: -50px; bottom: 50%; transform: translateY(50%); z-index: 1;">
+                    🍔</div>
+                <div id="crashMultiplier"
+                    style="font-size: 3.5rem; font-weight: 800; color: var(--accent); font-family: monospace; z-index: 3; margin-top: 1rem; text-shadow: 0 0 10px rgba(0,0,0,0.8);">
+                    1.00x</div>
+            </div>
+
+            <div style="display: flex; gap: 1rem;">
+                <button class="btn-primary" id="startCrashBtn" onclick="startCrash()"
+                    style="flex: 1; padding: 1rem;">Dar de Comer (10 Monedas)</button>
+                <button class="btn-secondary" id="cashoutBtn" onclick="cashout()" style="flex: 1; padding: 1rem;"
+                    disabled>Retirarse</button>
+            </div>
+            <div id="crashMessage" style="margin-top: 1rem; font-weight: bold; height: 20px;"></div>
+        </div>
+    </div>
+
+    <!-- Premium Roulette Modal -->
+    <div id="rouletteModal" class="modal">
+        <div class="modal-content" style="max-width: 800px; text-align: center;">
+            <span class="close-btn" onclick="closeModal('rouletteModal')">&times;</span>
+            <h3 style="margin-bottom: 1.5rem; font-size: 1.8rem;">Ruleta <span class="highlight">Premium</span></h3>
+
+            <div class="roulette-container"
+                style="position: relative; width: 100%; height: 120px; background: #0b0e14; border: 2px solid var(--accent); border-radius: 8px; overflow: hidden; margin-bottom: 2rem; display: flex; align-items: center; box-shadow: inset 0 0 20px rgba(0,0,0,0.8);">
+                <div class="roulette-pointer"
+                    style="position: absolute; left: 50%; top: 0; bottom: 0; width: 4px; background: white; z-index: 10; transform: translateX(-50%); box-shadow: 0 0 10px white;">
+                </div>
+                <div id="rouletteStrip"
+                    style="display: flex; height: 80px; transition: transform 5s cubic-bezier(0.15, 0.85, 0.15, 1); transform: translateX(0px); will-change: transform;">
+                    <!-- Tiles will be inserted here by JS -->
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+                <button class="btn-secondary"
+                    style="flex: 1; background: #E63946; color: white; border: none; padding: 1.5rem; font-size: 1.2rem; border-radius: 8px; font-weight: bold; box-shadow: 0 4px 15px rgba(230, 57, 70, 0.3);"
+                    onclick="betRoulette('red')">ROJO (x2)</button>
+                <button class="btn-secondary"
+                    style="flex: 1; background: #2A9D8F; color: white; border: none; padding: 1.5rem; font-size: 1.2rem; border-radius: 8px; font-weight: bold; box-shadow: 0 4px 15px rgba(42, 157, 143, 0.3);"
+                    onclick="betRoulette('green')">VERDE (x14)</button>
+                <button class="btn-secondary"
+                    style="flex: 1; background: #1D3557; color: white; border: none; padding: 1.5rem; font-size: 1.2rem; border-radius: 8px; font-weight: bold; box-shadow: 0 4px 15px rgba(29, 53, 87, 0.3);"
+                    onclick="betRoulette('black')">NEGRO (x2)</button>
+            </div>
+            <div id="rouletteMessage"
+                style="font-weight: bold; height: 30px; margin-bottom: 1rem; font-size: 1.2rem; color: var(--text-secondary);">
+                Selecciona tu color para apostar.</div>
+        </div>
+    </div>
+
+    <!-- Blackjack Modal -->
+    <div id="blackjackModal" class="modal">
+        <div class="modal-content" style="max-width: 600px; text-align: center;">
+            <span class="close-btn" onclick="closeModal('blackjackModal')">&times;</span>
+            <h3 style="margin-bottom: 1.5rem; font-size: 1.8rem;">Blackjack <span class="highlight">VIP</span></h3>
+
+            <div style="display: flex; justify-content: space-between; gap: 2rem; margin-bottom: 2rem;">
+                <div style="flex: 1; background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 12px;">
+                    <h4 style="color: var(--text-secondary); margin-bottom: 1rem;">Crupier (<span
+                            id="dealerScore">0</span>)</h4>
+                    <div id="dealerCards"
+                        style="font-size: 2rem; min-height: 60px; display: flex; flex-wrap: wrap; justify-content: center;">
+                    </div>
+                </div>
+                <div
+                    style="flex: 1; background: rgba(0,255,135,0.05); padding: 1rem; border-radius: 12px; border: 1px solid var(--accent);">
+                    <h4 style="color: var(--accent); margin-bottom: 1rem;">Tú (<span id="playerScore">0</span>)</h4>
+                    <div id="playerCards"
+                        style="font-size: 2rem; min-height: 60px; display: flex; flex-wrap: wrap; justify-content: center;">
+                    </div>
+                </div>
+            </div>
+
+            <div id="blackjackMessage"
+                style="font-weight: bold; font-size: 1.2rem; height: 30px; margin-bottom: 1.5rem;">Haz clic en Repartir
+                para jugar.</div>
+
+            <div style="display: flex; gap: 1rem;" id="blackjackControls">
+                <button class="btn-primary" onclick="startBlackjack()"
+                    style="flex: 1; padding: 1rem; font-size: 1.1rem;" id="bjStartBtn">Repartir (10 Monedas)</button>
+                <button class="btn-secondary" onclick="hitBlackjack()"
+                    style="flex: 1; padding: 1rem; font-size: 1.1rem; display: none;" id="bjHitBtn">Pedir Carta</button>
+                <button class="btn-secondary" onclick="standBlackjack()"
+                    style="flex: 1; padding: 1rem; font-size: 1.1rem; display: none;" id="bjStandBtn">Plantarse</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
