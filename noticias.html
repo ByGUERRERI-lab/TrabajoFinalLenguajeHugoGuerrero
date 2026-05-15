@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CesurFC</title>
+    <title>CesurFC - Noticias</title>
     <!-- Fuentes de Google -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,9 +26,9 @@
         </div>
         <nav id="nav-menu">
             <ul>
-                <li><a href="index.html" class="active">Inicio</a></li>
+                <li><a href="index.html">Inicio</a></li>
                 <li><a href="envivo.html">En Vivo</a></li>
-                <li><a href="noticias.html">Noticias</a></li>
+                <li><a href="noticias.html" class="active">Noticias</a></li>
                 <li><a href="clasificacion.html">Clasificación</a></li>
             </ul>
         </nav>
@@ -39,16 +39,64 @@
     </header>
 
     <main>
-        <!-- Principal -->
-        <section id="home" class="hero">
-            <div class="hero-content">
-                <h2>Vive el Fútbol como <span class="highlight">Nunca Antes</span></h2>
-                <p>Las últimas noticias, resultados en vivo y análisis profundo de las mejores ligas del mundo. Todo en
-                    un solo lugar.</p>
-                <button class="btn-primary btn-large" onclick="window.location.href='envivo.html'">Ver Partidos
-                    Hoy</button>
+        <!-- Últimas Noticias -->
+        <section id="news" class="section-container" style="padding-top: 100px;">
+            <div class="section-header">
+                <h3>Últimas <span class="highlight">Noticias</span></h3>
+                <a href="javascript:void(0)" class="view-all" onclick="toggleVisibility('news')">Ver todas ></a>
             </div>
-            <!-- El fondo se maneja mediante CSS y la imagen generada stadium_hero.png -->
+            <div class="news-grid">
+                <!-- Tarjeta de Noticia 1 -->
+                <div class="news-card" onclick="window.location.href='noticia.html';">
+                    <img class="news-img" src="img/player_action.png"
+                        alt="Jugador de fútbol en acción realizando un pase">
+                    <div class="news-content">
+                        <span class="tag">Fichajes</span>
+                        <h4>El mercado de verano rompe todos los récords</h4>
+                        <p>Los grandes clubes europeos preparan ofertas multimillonarias para la próxima temporada.</p>
+                    </div>
+                </div>
+                <!-- Tarjeta de Noticia 2 -->
+                <div class="news-card" onclick="window.location.href='noticia2.html';">
+                    <img class="news-img" src="img/news_tactics.png" alt="Esquema táctico de fútbol en pizarra">
+                    <div class="news-content">
+                        <span class="tag">Análisis</span>
+                        <h4>La evolución táctica del falso 9 moderno</h4>
+                        <p>Un repaso a cómo los entrenadores están adaptando este rol histórico al fútbol de alta
+                            presión.</p>
+                    </div>
+                </div>
+                <!-- Tarjeta de Noticia 3 -->
+                <div class="news-card" onclick="window.location.href='noticia3.html';">
+                    <img class="news-img" src="img/stadium_hero.png" alt="Estadio de fútbol repleto de aficionados">
+                    <div class="news-content">
+                        <span class="tag">Mundial</span>
+                        <h4>Anuncian las nuevas sedes para el próximo campeonato</h4>
+                        <p>FIFA confirma los estadios que albergarán la gran final en un evento histórico.</p>
+                    </div>
+                </div>
+                <!-- Noticias Adicionales -->
+                <div class="news-card hidden-item-news" style="display: none;"
+                    onclick="window.location.href='noticia4.html';">
+                    <img class="news-img" src="img/news_trophy.png" alt="Trofeo de campeonato internacional">
+                    <div class="news-content">
+                        <span class="tag">Premios</span>
+                        <h4>Gala del Balón de Oro 2026</h4>
+                        <p>Descubre quiénes son los máximos favoritos para llevarse el galardón este año tras una
+                            temporada intensa.</p>
+                    </div>
+                </div>
+                <div class="news-card hidden-item-news" style="display: none;"
+                    onclick="window.location.href='noticia5.html';">
+                    <img class="news-img" src="img/news_ball.png" alt="Balón de fútbol en el césped">
+                    <div class="news-content">
+                        <span class="tag">Lesiones</span>
+                        <h4>Baja sensible para el líder de la liga</h4>
+                        <p>Su estrella estará fuera por tres meses debido a una lesión de rodilla en el último
+                            encuentro.</p>
+                    </div>
+                </div>
+            </div>
         </section>
     </main>
 
@@ -65,6 +113,18 @@
     </footer>
 
     <script>
+        function toggleVisibility(sectionId) {
+            if (sectionId === 'news') {
+                const hiddenItems = document.querySelectorAll('#news .hidden-item-news');
+                const btn = document.querySelector('#news .view-all');
+                hiddenItems.forEach(item => {
+                    item.style.display = item.style.display === 'none' ? 'block' : 'none';
+                });
+                if (btn) {
+                    btn.textContent = btn.textContent === 'Ver todas >' ? 'Ver menos >' : 'Ver todas >';
+                }
+            }
+        }
         function toggleMenu() {
             document.getElementById('nav-menu').classList.toggle('open');
         }

@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CesurFC - Clasificación</title>
+    <!-- Fuentes de Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <header class="navbar">
+        <div class="logo">
+            <a href="index.html" style="text-decoration: none; color: inherit;">
+                <h1>Cesur<span>FC</span></h1>
+            </a>
+        </div>
+        <div class="hamburger" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <nav id="nav-menu">
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="envivo.html">En Vivo</a></li>
+                <li><a href="noticias.html">Noticias</a></li>
+                <li><a href="clasificacion.html" class="active">Clasificación</a></li>
+            </ul>
+        </nav>
+        <div class="auth-buttons" id="auth-section">
+            <button class="btn-secondary" onclick="openModal('loginModal')">Entrar</button>
+            <button class="btn-primary" onclick="openModal('registerModal')">Registrarse</button>
+        </div>
+    </header>
+
+    <main>
+        <!-- Clasificación -->
+        <section id="standings" class="section-container" style="padding-top: 100px;">
+            <div class="section-header">
+                <h3>Tabla de <span class="highlight">Clasificación</span></h3>
+                <select class="league-selector" onchange="changeLeague(this.value)">
+                    <option value="laliga">La Liga</option>
+                    <option value="premier">Premier League</option>
+                    <option value="seriea">Serie A</option>
+                </select>
+            </div>
+            <div class="table-responsive">
+                <table class="standings-table">
+                    <thead>
+                        <tr>
+                            <th>Pos</th>
+                            <th>Club</th>
+                            <th>PJ</th>
+                            <th>G</th>
+                            <th>E</th>
+                            <th>P</th>
+                            <th>DG</th>
+                            <th>Pts</th>
+                        </tr>
+                    </thead>
+                    <tbody id="standings-body" style="transition: opacity 0.3s ease;">
+                        <tr class="champions">
+                            <td>1</td>
+                            <td class="club-cell">
+                                <div class="club-color" style="background: #FFF;"></div> Real Madrid
+                            </td>
+                            <td>38</td>
+                            <td>29</td>
+                            <td>8</td>
+                            <td>1</td>
+                            <td>+61</td>
+                            <td><strong>95</strong></td>
+                        </tr>
+                        <tr class="champions">
+                            <td>2</td>
+                            <td class="club-cell">
+                                <div class="club-color" style="background: #A50044;"></div> Barcelona
+                            </td>
+                            <td>38</td>
+                            <td>26</td>
+                            <td>7</td>
+                            <td>5</td>
+                            <td>+35</td>
+                            <td><strong>85</strong></td>
+                        </tr>
+                        <tr class="champions">
+                            <td>3</td>
+                            <td class="club-cell">
+                                <div class="club-color" style="background: #ED1C24;"></div> Girona FC
+                            </td>
+                            <td>38</td>
+                            <td>25</td>
+                            <td>6</td>
+                            <td>7</td>
+                            <td>+39</td>
+                            <td><strong>81</strong></td>
+                        </tr>
+                        <tr class="champions">
+                            <td>4</td>
+                            <td class="club-cell">
+                                <div class="club-color" style="background: #CB3524;"></div> Atlético Madrid
+                            </td>
+                            <td>38</td>
+                            <td>24</td>
+                            <td>4</td>
+                            <td>10</td>
+                            <td>+27</td>
+                            <td><strong>76</strong></td>
+                        </tr>
+                        <tr class="europa">
+                            <td>5</td>
+                            <td class="club-cell">
+                                <div class="club-color" style="background: #000000;"></div> Athletic Club
+                            </td>
+                            <td>38</td>
+                            <td>19</td>
+                            <td>11</td>
+                            <td>8</td>
+                            <td>+24</td>
+                            <td><strong>68</strong></td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td class="club-cell">
+                                <div class="club-color" style="background: #008751;"></div> Real Betis
+                            </td>
+                            <td>38</td>
+                            <td>14</td>
+                            <td>15</td>
+                            <td>9</td>
+                            <td>+3</td>
+                            <td><strong>57</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">Cesur<span>FC</span></div>
+            <p>&copy; 2026 CesurFC. Todos los derechos reservados.</p>
+            <div class="social-links">
+                <a href="#">Twitter</a>
+                <a href="#">Instagram</a>
+                <a href="#">YouTube</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const leagueData = {
+            laliga: `
+                        <tr class="champions">
+                            <td>1</td>
+                            <td class="club-cell"><div class="club-color" style="background: #FFF;"></div> Real Madrid</td>
+                            <td>38</td><td>29</td><td>8</td><td>1</td><td>+61</td><td><strong>95</strong></td>
+                        </tr>
+                        <tr class="champions">
+                            <td>2</td>
+                            <td class="club-cell"><div class="club-color" style="background: #A50044;"></div> Barcelona</td>
+                            <td>38</td><td>26</td><td>7</td><td>5</td><td>+35</td><td><strong>85</strong></td>
+                        </tr>
+                        <tr class="champions">
+                            <td>3</td>
+                            <td class="club-cell"><div class="club-color" style="background: #ED1C24;"></div> Girona FC</td>
+                            <td>38</td><td>25</td><td>6</td><td>7</td><td>+39</td><td><strong>81</strong></td>
+                        </tr>
+                        <tr class="champions">
+                            <td>4</td>
+                            <td class="club-cell"><div class="club-color" style="background: #CB3524;"></div> Atlético Madrid</td>
+                            <td>38</td><td>24</td><td>4</td><td>10</td><td>+27</td><td><strong>76</strong></td>
+                        </tr>
+                        <tr class="europa">
+                            <td>5</td>
+                            <td class="club-cell"><div class="club-color" style="background: #000000;"></div> Athletic Club</td>
+                            <td>38</td><td>19</td><td>11</td><td>8</td><td>+24</td><td><strong>68</strong></td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td class="club-cell"><div class="club-color" style="background: #008751;"></div> Real Betis</td>
+                            <td>38</td><td>14</td><td>15</td><td>9</td><td>+3</td><td><strong>57</strong></td>
+                        </tr>`,
+            premier: `
+                        <tr class="champions">
+                            <td>1</td>
+                            <td class="club-cell"><div class="club-color" style="background: #6CABDD;"></div> Manchester City</td>
+                            <td>38</td><td>28</td><td>7</td><td>3</td><td>+62</td><td><strong>91</strong></td>
+                        </tr>
+                        <tr class="champions">
+                            <td>2</td>
+                            <td class="club-cell"><div class="club-color" style="background: #EF0107;"></div> Arsenal</td>
+                            <td>38</td><td>28</td><td>5</td><td>5</td><td>+62</td><td><strong>89</strong></td>
+                        </tr>
+                        <tr class="champions">
+                            <td>3</td>
+                            <td class="club-cell"><div class="club-color" style="background: #C8102E;"></div> Liverpool</td>
+                            <td>38</td><td>24</td><td>10</td><td>4</td><td>+45</td><td><strong>82</strong></td>
+                        </tr>
+                        <tr class="champions">
+                            <td>4</td>
+                            <td class="club-cell"><div class="club-color" style="background: #8A1538;"></div> Aston Villa</td>
+                            <td>38</td><td>20</td><td>8</td><td>10</td><td>+15</td><td><strong>68</strong></td>
+                        </tr>
+                        <tr class="europa">
+                            <td>5</td>
+                            <td class="club-cell"><div class="club-color" style="background: #112526;"></div> Tottenham</td>
+                            <td>38</td><td>20</td><td>6</td><td>12</td><td>+13</td><td><strong>66</strong></td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td class="club-cell"><div class="club-color" style="background: #034694;"></div> Chelsea</td>
+                            <td>38</td><td>18</td><td>9</td><td>11</td><td>+14</td><td><strong>63</strong></td>
+                        </tr>`,
+            seriea: `
+                        <tr class="champions">
+                            <td>1</td>
+                            <td class="club-cell"><div class="club-color" style="background: #001C58;"></div> Inter Milan</td>
+                            <td>38</td><td>29</td><td>7</td><td>2</td><td>+67</td><td><strong>94</strong></td>
+                        </tr>
+                        <tr class="champions">
+                            <td>2</td>
+                            <td class="club-cell"><div class="club-color" style="background: #FB090B;"></div> AC Milan</td>
+                            <td>38</td><td>22</td><td>9</td><td>7</td><td>+27</td><td><strong>75</strong></td>
+                        </tr>
+                        <tr class="champions">
+                            <td>3</td>
+                            <td class="club-cell"><div class="club-color" style="background: #000000;"></div> Juventus</td>
+                            <td>38</td><td>19</td><td>14</td><td>5</td><td>+23</td><td><strong>71</strong></td>
+                        </tr>
+                        <tr class="champions">
+                            <td>4</td>
+                            <td class="club-cell"><div class="club-color" style="background: #11214D;"></div> Atalanta</td>
+                            <td>38</td><td>21</td><td>6</td><td>11</td><td>+30</td><td><strong>69</strong></td>
+                        </tr>
+                        <tr class="europa">
+                            <td>5</td>
+                            <td class="club-cell"><div class="club-color" style="background: #B6282F;"></div> Bologna</td>
+                            <td>38</td><td>18</td><td>14</td><td>6</td><td>+22</td><td><strong>68</strong></td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td class="club-cell"><div class="club-color" style="background: #811331;"></div> Roma</td>
+                            <td>38</td><td>18</td><td>9</td><td>11</td><td>+19</td><td><strong>63</strong></td>
+                        </tr>`
+        };
+
+        function changeLeague(league) {
+            const tbody = document.getElementById('standings-body');
+            tbody.style.opacity = 0;
+            setTimeout(() => {
+                tbody.innerHTML = leagueData[league];
+                tbody.style.opacity = 1;
+            }, 300);
+        }
+        function toggleMenu() {
+            document.getElementById('nav-menu').classList.toggle('open');
+        }
+
+        // ---autenticación  ---
+        function openModal(id) { document.getElementById(id).classList.add('active'); }
+        function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+
+        function checkAuth() {
+            const user = localStorage.getItem('nexgenUser');
+            const authSection = document.getElementById('auth-section');
+            if (user) {
+                authSection.innerHTML = `<span style="margin-right:1rem; font-weight:600;">Hola, <span class="highlight">${user}</span></span>
+                                         <button class="btn-secondary" onclick="logout()">Salir</button>`;
+            } else {
+                authSection.innerHTML = `<button class="btn-secondary" onclick="openModal('loginModal')">Entrar</button>
+                                         <button class="btn-primary" onclick="openModal('registerModal')">Registrarse</button>`;
+            }
+        }
+
+        function handleRegister(e) {
+            e.preventDefault();
+            const user = document.getElementById('regUser').value;
+            localStorage.setItem('nexgenUser', user);
+            closeModal('registerModal');
+            checkAuth();
+            alert('¡Registro exitoso! Bienvenido ' + user);
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            const user = document.getElementById('loginUser').value;
+            localStorage.setItem('nexgenUser', user);
+            closeModal('loginModal');
+            checkAuth();
+        }
+
+        function logout() {
+            localStorage.removeItem('nexgenUser');
+            checkAuth();
+        }
+
+        window.onload = checkAuth;
+    </script>
+
+    <!--Inicisio de sesion -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('loginModal')">&times;</span>
+            <h3 style="margin-bottom: 1.5rem; font-size: 1.8rem;">Iniciar <span class="highlight">Sesión</span></h3>
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label>Usuario</label>
+                    <input type="text" id="loginUser" required>
+                </div>
+                <div class="form-group">
+                    <label>Contraseña</label>
+                    <input type="password" id="loginPass" required>
+                </div>
+                <button type="submit" class="btn-primary" style="width: 100%;">Entrar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Registrarse -->
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('registerModal')">&times;</span>
+            <h3 style="margin-bottom: 1.5rem; font-size: 1.8rem;">Crea tu <span class="highlight">Cuenta</span></h3>
+            <form id="registerForm" onsubmit="handleRegister(event)">
+                <div class="form-group">
+                    <label>Nombre de Usuario</label>
+                    <input type="text" id="regUser" required>
+                </div>
+                <div class="form-group">
+                    <label>Correo Electrónico</label>
+                    <input type="email" id="regEmail" required>
+                </div>
+                <div class="form-group">
+                    <label>Contraseña</label>
+                    <input type="password" id="regPass" required>
+                </div>
+                <button type="submit" class="btn-primary" style="width: 100%;">Registrarse</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
