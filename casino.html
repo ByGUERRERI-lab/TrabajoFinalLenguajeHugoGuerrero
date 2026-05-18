@@ -396,11 +396,34 @@
             const user = localStorage.getItem('nexgenUser');
             const authSection = document.getElementById('auth-section');
             if (user) {
-                authSection.innerHTML = `<span style="margin-right:1rem; font-weight:600;">Hola, <span class="highlight">${user}</span></span>
-                                         <button class="btn-secondary" onclick="logout()">Salir</button>`;
+                let balance = parseFloat(localStorage.getItem('cesurBalance') || "0.00");
+                authSection.innerHTML = `<span style="margin-right:1rem; font-weight:600;">Saldo: <span class="highlight">€${balance.toFixed(2)}</span></span>
+                                         <span style="margin-right:1rem; font-weight:600;">Hola, <span class="highlight">${user}</span></span>
+                                         <button class="btn-primary" onclick="openModal('depositModal')" style="margin-right: 0.5rem; padding: 0.5rem 1rem;">Ingresar</button>
+                                         <button class="btn-secondary" onclick="logout()" style="padding: 0.5rem 1rem;">Salir</button>`;
             } else {
                 authSection.innerHTML = `<button class="btn-secondary" onclick="openModal('loginModal')">Entrar</button>
                                          <button class="btn-primary" onclick="openModal('registerModal')">Registrarse</button>`;
+            }
+        }
+
+        function updateBalance(amount) {
+            let balance = parseFloat(localStorage.getItem('cesurBalance') || "0.00");
+            balance += amount;
+            if (balance < 0) balance = 0;
+            localStorage.setItem('cesurBalance', balance.toFixed(2));
+            checkAuth();
+            return balance;
+        }
+
+        function handleDeposit(e) {
+            e.preventDefault();
+            const amount = parseFloat(document.getElementById('depositAmount').value);
+            if (amount > 0) {
+                updateBalance(amount);
+                closeModal('depositModal');
+                alert('¡Has ingresado €' + amount.toFixed(2) + ' exitosamente!');
+                document.getElementById('depositForm').reset();
             }
         }
 
@@ -435,6 +458,17 @@
 
         function spinSlots() {
             if (isSpinning) return;
+            
+            const betAmount = parseFloat(document.getElementById('slotBetAmount').value) || 10;
+            if (betAmount <= 0) return alert('La apuesta debe ser mayor a 0');
+
+            let balance = parseFloat(localStorage.getItem('cesurBalance') || "0.00");
+            if (balance < betAmount) {
+                alert('No tienes suficiente saldo. ¡Ingresa dinero para jugar!');
+                return;
+            }
+            updateBalance(-betAmount);
+
             isSpinning = true;
 
             const btn = document.getElementById('spinButton');
@@ -471,13 +505,17 @@
 
                 if (result[0] === result[1] && result[1] === result[2]) {
                     msg.style.color = 'var(--accent)';
-                    msg.innerText = '¡JACKPOT! Has ganado 1000 Monedas 🎉';
-                    jackpotVal -= 1000;
+                    let win = betAmount * 100;
+                    msg.innerText = `¡JACKPOT! Has ganado €${win} 🎉`;
+                    updateBalance(win);
+                    jackpotVal -= win;
                     document.querySelector('.slot-machine').classList.add('win-anim');
                     setTimeout(() => document.querySelector('.slot-machine').classList.remove('win-anim'), 3000);
                 } else if (result[0] === result[1] || result[1] === result[2] || result[0] === result[2]) {
                     msg.style.color = '#FFD700';
-                    msg.innerText = '¡Premio Menor! Has ganado 50 Monedas';
+                    let win = betAmount * 5;
+                    msg.innerText = `¡Premio Menor! Has ganado €${win}`;
+                    updateBalance(win);
                 } else {
                     msg.style.color = 'var(--danger)';
                     msg.innerText = 'Casi... ¡Inténtalo de nuevo!';
@@ -496,6 +534,8 @@
         let isCrashing = false;
         let guyScale = 1;
 
+        let currentCrashBet = 0;
+        
         function animateBurger() {
             const burger = document.getElementById('burger');
             burger.style.transition = 'none';
@@ -507,6 +547,17 @@
         }
 
         function startCrash() {
+            const betAmount = parseFloat(document.getElementById('crashBetAmount').value) || 10;
+            if (betAmount <= 0) return alert('La apuesta debe ser mayor a 0');
+
+            let balance = parseFloat(localStorage.getItem('cesurBalance') || "0.00");
+            if (balance < betAmount) {
+                alert('No tienes suficiente saldo. ¡Ingresa dinero para jugar!');
+                return;
+            }
+            updateBalance(-betAmount);
+            currentCrashBet = betAmount;
+
             const startBtn = document.getElementById('startCrashBtn');
             const cashoutBtn = document.getElementById('cashoutBtn');
             const multDisplay = document.getElementById('crashMultiplier');
@@ -572,9 +623,10 @@
             fatGuy.innerHTML = '😎'; // Satisfecho
             fatGuy.style.fontSize = '4rem';
 
-            const winAmount = (10 * multiplier).toFixed(2);
+            const winAmount = (currentCrashBet * multiplier).toFixed(2);
+            updateBalance(parseFloat(winAmount));
             msg.style.color = 'var(--accent)';
-            msg.innerText = `¡Te retiraste a tiempo! Ganaste ${winAmount} Monedas 🎉`;
+            msg.innerText = `¡Te retiraste a tiempo! Ganaste €${winAmount} 🎉`;
 
             document.getElementById('crashMultiplier').parentElement.classList.add('win-anim');
             setTimeout(() => document.getElementById('crashMultiplier').parentElement.classList.remove('win-anim'), 3000);
@@ -626,6 +678,17 @@
 
         function betRoulette(color) {
             if (isRouletteSpinning) return;
+            
+            const betAmount = parseFloat(document.getElementById('rouletteBetAmount').value) || 10;
+            if (betAmount <= 0) return alert('La apuesta debe ser mayor a 0');
+
+            let balance = parseFloat(localStorage.getItem('cesurBalance') || "0.00");
+            if (balance < betAmount) {
+                alert('No tienes suficiente saldo. ¡Ingresa dinero para jugar!');
+                return;
+            }
+            updateBalance(-betAmount);
+
             isRouletteSpinning = true;
 
             const strip = document.getElementById('rouletteStrip');
@@ -655,7 +718,9 @@
             setTimeout(() => {
                 if (finalColor === color) {
                     msg.style.color = 'var(--accent)';
-                    msg.innerText = `¡Ha salido ${finalNum} ${finalColor === 'red' ? 'Rojo' : finalColor === 'black' ? 'Negro' : 'Verde'}! ¡HAS GANADO! 🎉`;
+                    let winAmount = color === 'green' ? betAmount * 14 : betAmount * 2;
+                    updateBalance(winAmount);
+                    msg.innerText = `¡Ha salido ${finalNum} ${finalColor === 'red' ? 'Rojo' : finalColor === 'black' ? 'Negro' : 'Verde'}! ¡HAS GANADO €${winAmount}! 🎉`;
                     strip.parentElement.classList.add('win-anim');
                     setTimeout(() => strip.parentElement.classList.remove('win-anim'), 3000);
                 } else {
@@ -710,7 +775,20 @@
             return `<span style="color: ${color}; background: white; padding: 5px 10px; border-radius: 5px; margin: 2px; border: 1px solid #ccc; display: inline-block; box-shadow: 2px 2px 5px rgba(0,0,0,0.2); font-weight: bold;">${card.value}${card.suit}</span>`;
         }
 
+        let currentBjBet = 0;
+        
         function startBlackjack() {
+            const betAmount = parseFloat(document.getElementById('bjBetAmount').value) || 10;
+            if (betAmount <= 0) return alert('La apuesta debe ser mayor a 0');
+
+            let balance = parseFloat(localStorage.getItem('cesurBalance') || "0.00");
+            if (balance < betAmount) {
+                alert('No tienes suficiente saldo. ¡Ingresa dinero para jugar!');
+                return;
+            }
+            updateBalance(-betAmount);
+            currentBjBet = betAmount;
+
             buildDeck();
             playerHand = [deck.pop(), deck.pop()];
             dealerHand = [deck.pop()];
@@ -723,7 +801,8 @@
             updateBlackjackUI();
 
             if (calculateScore(playerHand) === 21) {
-                endBlackjack('¡Blackjack! Has ganado 25 Monedas 🎉', true);
+                updateBalance(currentBjBet * 2.5);
+                endBlackjack(`¡Blackjack! Has ganado €${currentBjBet * 2.5} 🎉`, true);
             }
         }
 
@@ -745,12 +824,15 @@
 
             let pScore = calculateScore(playerHand);
             if (dealerScore > 21) {
+                updateBalance(currentBjBet * 2);
                 endBlackjack('El Crupier se pasa de 21. ¡Has ganado! 🎉', true);
             } else if (dealerScore > pScore) {
                 endBlackjack('Gana el Crupier.', false);
             } else if (dealerScore < pScore) {
+                updateBalance(currentBjBet * 2);
                 endBlackjack('¡Has ganado a la casa! 🎉', true);
             } else {
+                updateBalance(currentBjBet);
                 endBlackjack('Empate. Se devuelve la apuesta.', null);
             }
         }
@@ -825,11 +907,45 @@
         </div>
     </div>
 
+    <!-- Deposit Modal -->
+    <div id="depositModal" class="modal">
+        <div class="modal-content" style="max-width: 400px; text-align: center;">
+            <span class="close-btn" onclick="closeModal('depositModal')">&times;</span>
+            <h3 style="margin-bottom: 1.5rem; font-size: 1.8rem;">Ingresar <span class="highlight">Dinero</span></h3>
+            <form id="depositForm" onsubmit="handleDeposit(event)">
+                <div class="form-group" style="text-align: left;">
+                    <label>Cantidad a ingresar (€)</label>
+                    <input type="number" id="depositAmount" min="1" step="0.01" required>
+                </div>
+                <div class="form-group" style="text-align: left;">
+                    <label>Número de Tarjeta</label>
+                    <input type="text" placeholder="Ej: 1234567890123456" required>
+                </div>
+                <div style="display: flex; gap: 1rem;">
+                    <div class="form-group" style="flex: 1; text-align: left;">
+                        <label>Caducidad</label>
+                        <input type="text" placeholder="MM/AA" required>
+                    </div>
+                    <div class="form-group" style="flex: 1; text-align: left;">
+                        <label>CVV</label>
+                        <input type="text" placeholder="123" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary" style="width: 100%; margin-top: 1rem;">Completar Ingreso</button>
+            </form>
+        </div>
+    </div>
+
     <!-- Game Modal (Slots) -->
     <div id="gameModal" class="modal">
         <div class="modal-content" style="max-width: 500px; text-align: center;">
             <span class="close-btn" onclick="closeModal('gameModal')">&times;</span>
             <h3 style="margin-bottom: 1.5rem; font-size: 1.8rem;">Cesur <span class="highlight">Slots Pro</span></h3>
+
+            <div class="form-group" style="margin-bottom: 1.5rem; max-width: 250px; margin-left: auto; margin-right: auto;">
+                <label style="display: block; text-align: center; margin-bottom: 0.5rem; font-weight: bold;">Cantidad a Apostar (€)</label>
+                <input type="number" id="slotBetAmount" min="0.5" step="0.5" value="10" style="text-align: center; font-size: 1.2rem;">
+            </div>
 
             <div class="slot-machine">
                 <div class="slot-reel" id="reel1">🍒</div>
@@ -842,7 +958,7 @@
                 ¡Tira de la palanca!</div>
 
             <button class="btn-primary" id="spinButton" onclick="spinSlots()"
-                style="width: 100%; font-size: 1.2rem; padding: 1rem;">🎰 Tirar (10 Monedas)</button>
+                style="width: 100%; font-size: 1.2rem; padding: 1rem;">🎰 Tirar</button>
         </div>
     </div>
 
@@ -851,6 +967,11 @@
         <div class="modal-content" style="max-width: 500px; text-align: center;">
             <span class="close-btn" onclick="closeModal('crashModal'); resetCrash();">&times;</span>
             <h3 style="margin-bottom: 1.5rem; font-size: 1.8rem;">Gordo <span class="highlight">Glotón</span></h3>
+
+            <div class="form-group" style="margin-bottom: 1.5rem; max-width: 250px; margin-left: auto; margin-right: auto;">
+                <label style="display: block; text-align: center; margin-bottom: 0.5rem; font-weight: bold;">Cantidad a Apostar (€)</label>
+                <input type="number" id="crashBetAmount" min="0.5" step="0.5" value="10" style="text-align: center; font-size: 1.2rem;">
+            </div>
 
             <div
                 style="background: var(--bg-main); padding: 3rem; border-radius: 12px; border: 2px solid rgba(255,255,255,0.1); margin-bottom: 1.5rem; position: relative; overflow: hidden; min-height: 250px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
@@ -869,7 +990,7 @@
 
             <div style="display: flex; gap: 1rem;">
                 <button class="btn-primary" id="startCrashBtn" onclick="startCrash()"
-                    style="flex: 1; padding: 1rem;">Dar de Comer (10 Monedas)</button>
+                    style="flex: 1; padding: 1rem;">Dar de Comer</button>
                 <button class="btn-secondary" id="cashoutBtn" onclick="cashout()" style="flex: 1; padding: 1rem;"
                     disabled>Retirarse</button>
             </div>
@@ -882,6 +1003,11 @@
         <div class="modal-content" style="max-width: 800px; text-align: center;">
             <span class="close-btn" onclick="closeModal('rouletteModal')">&times;</span>
             <h3 style="margin-bottom: 1.5rem; font-size: 1.8rem;">Ruleta <span class="highlight">Premium</span></h3>
+
+            <div class="form-group" style="margin-bottom: 1.5rem; max-width: 250px; margin-left: auto; margin-right: auto;">
+                <label style="display: block; text-align: center; margin-bottom: 0.5rem; font-weight: bold;">Cantidad a Apostar (€)</label>
+                <input type="number" id="rouletteBetAmount" min="0.5" step="0.5" value="10" style="text-align: center; font-size: 1.2rem;">
+            </div>
 
             <div class="roulette-container"
                 style="position: relative; width: 100%; height: 120px; background: #0b0e14; border: 2px solid var(--accent); border-radius: 8px; overflow: hidden; margin-bottom: 2rem; display: flex; align-items: center; box-shadow: inset 0 0 20px rgba(0,0,0,0.8);">
@@ -917,6 +1043,11 @@
             <span class="close-btn" onclick="closeModal('blackjackModal')">&times;</span>
             <h3 style="margin-bottom: 1.5rem; font-size: 1.8rem;">Blackjack <span class="highlight">VIP</span></h3>
 
+            <div class="form-group" style="margin-bottom: 1.5rem; max-width: 250px; margin-left: auto; margin-right: auto;">
+                <label style="display: block; text-align: center; margin-bottom: 0.5rem; font-weight: bold;">Cantidad a Apostar (€)</label>
+                <input type="number" id="bjBetAmount" min="0.5" step="0.5" value="10" style="text-align: center; font-size: 1.2rem;">
+            </div>
+
             <div style="display: flex; justify-content: space-between; gap: 2rem; margin-bottom: 2rem;">
                 <div style="flex: 1; background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 12px;">
                     <h4 style="color: var(--text-secondary); margin-bottom: 1rem;">Crupier (<span
@@ -940,7 +1071,7 @@
 
             <div style="display: flex; gap: 1rem;" id="blackjackControls">
                 <button class="btn-primary" onclick="startBlackjack()"
-                    style="flex: 1; padding: 1rem; font-size: 1.1rem;" id="bjStartBtn">Repartir (10 Monedas)</button>
+                    style="flex: 1; padding: 1rem; font-size: 1.1rem;" id="bjStartBtn">Repartir</button>
                 <button class="btn-secondary" onclick="hitBlackjack()"
                     style="flex: 1; padding: 1rem; font-size: 1.1rem; display: none;" id="bjHitBtn">Pedir Carta</button>
                 <button class="btn-secondary" onclick="standBlackjack()"
