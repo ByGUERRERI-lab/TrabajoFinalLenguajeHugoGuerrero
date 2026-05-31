@@ -346,12 +346,11 @@
 
                 <!-- Juego 4 -->
                 <div class="game-card">
-                    <div class="game-icon">🍔</div>
-                    <h4 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Jorge Glotón</h4>
-                    <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">Multiplica tu dinero mientras el
-                        gordo come. ¡Retírate antes de que explote!</p>
-                    <button class="btn-secondary" style="width: 100%;" onclick="openModal('crashModal')">Jugar
-                        Glotón</button>
+                    <div class="game-icon">🛩️</div>
+                    <h4 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Aviator</h4>
+                    <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">Sube el multiplicador con el aviador.
+                        ¡Retírate antes de que la nave se estrelle!</p>
+                    <button class="btn-secondary" style="width: 100%;" onclick="openModal('crashModal')">Jugar Aviator</button>
                 </div>
             </div>
         </section>
@@ -527,7 +526,7 @@
             }, 2000);
         }
 
-        // Crash Game Logic (Gordo Gloton)
+        // Crash Game Logic (Aviator)
         let crashInterval;
         let multiplier = 1.00;
         let crashPoint = 0;
@@ -570,7 +569,7 @@
             msg.innerText = '';
             multDisplay.style.color = 'var(--accent)';
             multiplier = 1.00;
-            fatGuy.innerHTML = '<img src="img/jorge.jpg" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; border: 3px solid var(--accent);">';
+            fatGuy.innerHTML = '<div style="width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, #1D3557, #457B9D); display: flex; align-items: center; justify-content: center; color: white; font-size: 2.2rem; border: 3px solid var(--accent);">😎</div>';
             guyScale = 1;
             fatGuy.style.transform = `scale(${guyScale})`;
 
@@ -586,7 +585,7 @@
                 fatGuy.style.transform = `scale(${guyScale})`;
 
                 tick++;
-                if (tick % 5 === 0) animateBurger(); // Come una hamburguesa cada medio segundo
+                if (tick % 5 === 0) animateBurger(); // El avión acelera un poco cada medio segundo
 
                 if (multiplier >= crashPoint) {
                     clearInterval(crashInterval);
@@ -595,7 +594,7 @@
                     startBtn.disabled = false;
                     multDisplay.style.color = 'var(--danger)';
                     msg.style.color = 'var(--danger)';
-                    msg.innerText = '¡PUM! El gordo ha explotado. Has perdido.';
+                    msg.innerText = '¡PUM! El aviador se estrelló. Has perdido.';
 
                     fatGuy.innerHTML = '💥';
                     fatGuy.style.fontSize = '4rem';
@@ -639,7 +638,7 @@
             document.getElementById('startCrashBtn').disabled = false;
             document.getElementById('cashoutBtn').disabled = true;
             document.getElementById('crashMessage').innerText = '';
-            document.getElementById('fatGuy').innerHTML = '<img src="img/jorge.jpg" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; border: 3px solid var(--accent);">';
+            document.getElementById('fatGuy').innerHTML = '<div style="width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, #1D3557, #457B9D); display: flex; align-items: center; justify-content: center; color: white; font-size: 2.2rem; border: 3px solid var(--accent);">😎</div>';
             document.getElementById('fatGuy').style.transform = 'scale(1)';
             document.getElementById('burger').style.right = '-50px';
             isCrashing = false;
@@ -962,11 +961,11 @@
         </div>
     </div>
 
-    <!-- Crash Game Modal (El Gordo Gloton) -->
+    <!-- Crash Game Modal (Aviator) -->
     <div id="crashModal" class="modal">
         <div class="modal-content" style="max-width: 500px; text-align: center;">
             <span class="close-btn" onclick="closeModal('crashModal'); resetCrash();">&times;</span>
-            <h3 style="margin-bottom: 1.5rem; font-size: 1.8rem;">Gordo <span class="highlight">Glotón</span></h3>
+            <h3 style="margin-bottom: 1.5rem; font-size: 1.8rem;">Aviator <span class="highlight">Crash</span></h3>
 
             <div class="form-group" style="margin-bottom: 1.5rem; max-width: 250px; margin-left: auto; margin-right: auto;">
                 <label style="display: block; text-align: center; margin-bottom: 0.5rem; font-weight: bold;">Cantidad a Apostar (€)</label>
@@ -977,12 +976,11 @@
                 style="background: var(--bg-main); padding: 3rem; border-radius: 12px; border: 2px solid rgba(255,255,255,0.1); margin-bottom: 1.5rem; position: relative; overflow: hidden; min-height: 250px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
                 <div id="fatGuy"
                     style="transition: transform 0.1s; z-index: 2; display: flex; align-items: center; justify-content: center;">
-                    <img src="img/jorge.jpg"
-                        style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; border: 3px solid var(--accent);">
+                    <div style="width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, #1D3557, #457B9D); display: flex; align-items: center; justify-content: center; color: white; font-size: 2.2rem; border: 3px solid var(--accent);">😎</div>
                 </div>
                 <div id="burger"
                     style="font-size: 2rem; position: absolute; right: -50px; bottom: 50%; transform: translateY(50%); z-index: 1;">
-                    🍔</div>
+                    ✈️</div>
                 <div id="crashMultiplier"
                     style="font-size: 3.5rem; font-weight: 800; color: var(--accent); font-family: monospace; z-index: 3; margin-top: 1rem; text-shadow: 0 0 10px rgba(0,0,0,0.8);">
                     1.00x</div>
@@ -990,7 +988,7 @@
 
             <div style="display: flex; gap: 1rem;">
                 <button class="btn-primary" id="startCrashBtn" onclick="startCrash()"
-                    style="flex: 1; padding: 1rem;">Dar de Comer</button>
+                    style="flex: 1; padding: 1rem;">Acelerar</button>
                 <button class="btn-secondary" id="cashoutBtn" onclick="cashout()" style="flex: 1; padding: 1rem;"
                     disabled>Retirarse</button>
             </div>
